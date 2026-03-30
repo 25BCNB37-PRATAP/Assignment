@@ -20,7 +20,7 @@ app.post("/students", async (req, res) => {
   const { name, usn, branch, year, email } = req.body;
 
   if (!name || !usn || !email) {
-    return res.status(400).json({ error: "Missing required fields" });
+    return res.status(400).json({ ok: false, error: "Missing required fields" });
   }
 
   try {
@@ -30,8 +30,7 @@ app.post("/students", async (req, res) => {
 
     if (error) {
       console.error(error);
-      return res.status(500).json({ error: error.message });
-    }
+      return res.status(500).json({ ok: false, error: error.message });
 
     res.json({ ok: true, message: "Student added", data });
 
