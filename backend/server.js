@@ -1,23 +1,3 @@
-const express = require("express");
-const cors = require("cors");
-require("dotenv").config();
-
-const { createClient } = require("@supabase/supabase-js");
-
-const app = express();
-app.use(cors());
-app.use(express.json());
-app.get("/", (req, res) => {
-  res.send("Backend is working 🚀");
-});
-
-
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_KEY
-);
-
-// POST route
 app.post("/students", async (req, res) => {
   console.log("Incoming Data:", req.body);
 
@@ -35,6 +15,7 @@ app.post("/students", async (req, res) => {
     if (error) {
       console.error(error);
       return res.status(500).json({ ok: false, error: error.message });
+    }
 
     res.json({ ok: true, message: "Student added", data });
 
@@ -42,9 +23,4 @@ app.post("/students", async (req, res) => {
     console.error(err);
     res.status(500).json({ ok: false, error: "Server error" });
   }
-});
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
 });
