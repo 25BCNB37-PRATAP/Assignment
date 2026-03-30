@@ -8,19 +8,19 @@ app.post("/students", async (req, res) => {
   }
 
   try {
-    const { data, error } = await supabase
+    const result = await supabase
       .from("students")
       .insert([{ name, usn, branch, year, email }]);
 
-    if (error) {
-      console.error(error);
-      return res.status(500).json({ ok: false, error: error.message });
+    if (result.error) {
+      console.error(result.error);
+      return res.status(500).json({ ok: false, error: result.error.message });
     }
 
-    res.json({ ok: true, message: "Student added", data });
+    return res.json({ ok: true, message: "Student added" });
 
   } catch (err) {
     console.error(err);
-    res.status(500).json({ ok: false, error: "Server error" });
+    return res.status(500).json({ ok: false, error: "Server error" });
   }
 });
