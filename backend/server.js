@@ -13,19 +13,17 @@ const supabase = createClient(
   process.env.SUPABASE_KEY
 );
 
-// ✅ Test route
+// test route
 app.get("/", (req, res) => {
   res.send("Backend is working 🚀");
 });
 
-// ✅ POST route
+// post route
 app.post("/students", async (req, res) => {
-  console.log("Incoming Data:", req.body);
-
   const { name, usn, branch, year, email } = req.body;
 
   if (!name || !usn || !email) {
-    return res.status(400).json({ ok: false, error: "Missing required fields" });
+    return res.status(400).json({ ok: false, error: "Missing fields" });
   }
 
   try {
@@ -38,7 +36,6 @@ app.post("/students", async (req, res) => {
     }
 
     return res.json({ ok: true, message: "Student added" });
-
   } catch (err) {
     return res.status(500).json({ ok: false, error: "Server error" });
   }
@@ -46,5 +43,5 @@ app.post("/students", async (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log("Server running");
 });
