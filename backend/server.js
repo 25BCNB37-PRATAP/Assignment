@@ -33,7 +33,7 @@ app.post("/students", async (req, res) => {
       return res.status(500).json({ error: error.message });
     }
 
-    res.json({ message: "Student added", data });
+    res.json({ ok: true, message: "Student added", data });
 
   } catch (err) {
     console.error(err);
