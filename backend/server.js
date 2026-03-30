@@ -5,23 +5,18 @@ require("dotenv").config();
 const { createClient } = require("@supabase/supabase-js");
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
+
+
+// 👇 ADD THIS RIGHT HERE (IMPORTANT)
 app.get("/", (req, res) => {
   res.send("Backend is working 🚀");
 });
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_KEY
-);
 
-// test route
-app.get("/", (req, res) => {
-  res.send("Backend is working 🚀");
-});
-
-// post route
+// 👇 KEEP THIS BELOW
 app.post("/students", async (req, res) => {
   const { name, usn, branch, year, email } = req.body;
 
@@ -38,13 +33,8 @@ app.post("/students", async (req, res) => {
       return res.status(500).json({ ok: false, error: error.message });
     }
 
-    return res.json({ ok: true, message: "Student added" });
+    res.json({ ok: true, message: "Student added" });
   } catch (err) {
-    return res.status(500).json({ ok: false, error: "Server error" });
+    res.status(500).json({ ok: false, error: "Server error" });
   }
-});
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log("Server running");
 });
