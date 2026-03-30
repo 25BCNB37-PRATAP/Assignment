@@ -7,6 +7,9 @@ const { createClient } = require("@supabase/supabase-js");
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.get("/", (req, res) => {
+  res.send("Backend is working 🚀");
+});
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
